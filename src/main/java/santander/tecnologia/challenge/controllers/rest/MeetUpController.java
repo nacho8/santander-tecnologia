@@ -100,6 +100,7 @@ public class MeetUpController {
 		}
 	}
 	
+	
 	@PutMapping("createMeetUp")
 	@ApiOperation(value = "Metodo encargado de crear la meetUp")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
