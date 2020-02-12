@@ -101,12 +101,12 @@ public class MeetUpController {
 	}
 	
 	@PutMapping("createMeetUp")
-	@ApiOperation(value = "Metodo encargado de agregar un usuario a la meetUp")
+	@ApiOperation(value = "Metodo encargado de crear la meetUp")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
 			@ApiResponse(code = 500, message = "Internal Server Error"),
 			@ApiResponse(code = 400, message = "Bad Request"),
 			@ApiResponse(code = 404, message = "Not Found")})
-	public ResponseEntity<?> addUser(@RequestBody MeetUpCreateRequest meetUpCreateRequest) {
+	public ResponseEntity<?> createMeetUp(@RequestBody MeetUpCreateRequest meetUpCreateRequest) {
 		try {
 			MeetUpCreateResponse meetUpCreateResponse = meetUpService.createMeetUp(meetUpCreateRequest.getUserId(),meetUpCreateRequest.getDirection(), meetUpCreateRequest.getDateMeetUp());
 			return new ResponseEntity<>(meetUpCreateResponse,HttpStatus.OK);
