@@ -24,4 +24,7 @@ public class MeetUpApplication extends SpringBootServletInitializer{
 		
 	}
 	
+	
+	
 }
+	

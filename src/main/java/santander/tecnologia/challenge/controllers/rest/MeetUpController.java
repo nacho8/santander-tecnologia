@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +27,7 @@ import santander.tecnologia.challenge.ws.response.MeetUpObtainAmountBeerResponse
 import santander.tecnologia.challenge.ws.response.MeetUpObtainTemperatureResponse;
 
 @RestController
-@RequestMapping("santander/meetUp")
+@RequestMapping("/")
 public class MeetUpController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(MeetUpController.class);
@@ -40,6 +41,7 @@ public class MeetUpController {
 	private MeetUpService meetUpService;
 	
 	@GetMapping("amountBeer/{meetUpId}")
+	@CrossOrigin(origins = "http://localhost:3000")
 	@ApiOperation(value = "Metodo encargado de devolver la cantidad de cervezas para una meetUp")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
 			@ApiResponse(code = 500, message = "Internal Server Error"),
@@ -56,11 +58,11 @@ public class MeetUpController {
 		catch(Exception e) {
 			LOGGER.error(ERROR_MESSAGE_INTERNAL, e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ERROR_MESSAGE_INTERNAL);
-
 		}
 	}
 	
 	@GetMapping("obtainWeather/{meetUpId}")
+	@CrossOrigin(origins = "http://localhost:3000")
 	@ApiOperation(value = "Metodo encargado de devolver el clima para una meetUp")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
 			@ApiResponse(code = 500, message = "Internal Server Error"),
@@ -81,6 +83,7 @@ public class MeetUpController {
 	}
 	
 	@PutMapping("addUser/{meetUpId}/user/{userId}")
+	@CrossOrigin(origins = "http://localhost:3000")
 	@ApiOperation(value = "Metodo encargado de agregar un usuario a la meetUp")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
 			@ApiResponse(code = 500, message = "Internal Server Error"),
@@ -102,6 +105,7 @@ public class MeetUpController {
 	
 	
 	@PutMapping("createMeetUp")
+	@CrossOrigin(origins = "http://localhost:3000")
 	@ApiOperation(value = "Metodo encargado de crear la meetUp")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
 			@ApiResponse(code = 500, message = "Internal Server Error"),
@@ -122,6 +126,7 @@ public class MeetUpController {
 	}
 	
 	@PostMapping("confirmAssistence/user/{userId}/meetUp/{meetUpId}")
+	@CrossOrigin(origins = "http://localhost:3000")
 	@ApiOperation(value = "Metodo encargado de confirmar la asistencia")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
 			@ApiResponse(code = 500, message = "Internal Server Error"),
@@ -134,6 +139,25 @@ public class MeetUpController {
 		}catch(MeetUpException e){
 			LOGGER.error(ERROR_MESSAGE_MEET_UP_OR_USER_NOT_EXIST, e);
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}catch(Exception e) {
+			LOGGER.error(ERROR_MESSAGE_INTERNAL, e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ERROR_MESSAGE_INTERNAL);
+
+		}
+	}
+	
+	
+	@GetMapping("findAll")
+	@CrossOrigin(origins = "http://localhost:3000")
+	@ApiOperation(value = "Metodo encargado de devolver todas las meetUps")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
+			@ApiResponse(code = 500, message = "Internal Server Error"),
+			@ApiResponse(code = 400, message = "Bad Request"),
+			@ApiResponse(code = 404, message = "Not Found")})
+	public ResponseEntity<?> findAllMeetUp() {
+		try {
+			System.out.println("-------------   DEVUELVO TODOS LOS REGISTROS DE MEET UP");
+			return new ResponseEntity<>(meetUpService.findAllMeetUp(),HttpStatus.OK);
 		}catch(Exception e) {
 			LOGGER.error(ERROR_MESSAGE_INTERNAL, e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ERROR_MESSAGE_INTERNAL);

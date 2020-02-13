@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 @Entity
@@ -20,13 +22,13 @@ public class MeetUp {
 	private Long id;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "meetUp")
+	@JsonIgnore
 	private Set<MeetUpUsers> meetUpUser;
 	
 	private LocalDate meetUpDate;
 	
 	private String direction;
 
-	
 	
 	public LocalDate getMeetUpDate() {
 		return meetUpDate;

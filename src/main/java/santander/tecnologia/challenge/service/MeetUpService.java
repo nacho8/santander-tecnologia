@@ -48,6 +48,10 @@ public class MeetUpService {
 	@Autowired
 	private TemperatureCache temperatureCache;
 	
+	public List<MeetUp> findAllMeetUp(){
+		return  meetUpRepository.findAll();
+	}
+	
 	public MeetUpObtainAmountBeerResponse obtaintAmountBeer(Long meetUpId) throws Exception {
 		MeetUpObtainAmountBeerResponse meetUpObtainAmountBeerResponse = new MeetUpObtainAmountBeerResponse();
 		
