@@ -30,6 +30,12 @@ public class MeetUp {
 	private String direction;
 
 	
+	public MeetUp(LocalDate meetUpDate, String direction) {
+		super();
+		this.meetUpDate = meetUpDate;
+		this.direction = direction;
+	}
+
 	public LocalDate getMeetUpDate() {
 		return meetUpDate;
 	}

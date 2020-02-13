@@ -31,6 +31,14 @@ public class MeetUpUsers {
 
     
     
+	public MeetUpUsers(MeetUp meetUp, User user, Date userMeetUpDate, boolean userAttented) {
+		super();
+		this.meetUp = meetUp;
+		this.user = user;
+		this.userMeetUpDate = userMeetUpDate;
+		this.userAttented = userAttented;
+	}
+
 	public boolean isUserAttented() {
 		return userAttented;
 	}

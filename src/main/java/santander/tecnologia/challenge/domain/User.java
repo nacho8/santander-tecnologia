@@ -21,18 +21,39 @@ public class User {
 	
 	private String firstName;
 	
+	private String userName;
 	
-	public User(String firstName, String lastName) {
+	private String lastName;
+	
+	private String password;
+	
+	public User(String firstName, String lastName, String userName) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.userName = userName;
 	}
 	
 	public User() {
 		super();
 	}
 
-	private String lastName;
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
 	public Long getId() {
 		return id;

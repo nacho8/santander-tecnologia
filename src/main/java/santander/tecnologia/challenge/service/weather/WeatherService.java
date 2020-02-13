@@ -1,4 +1,4 @@
-package santander.tecnologia.challenge.service;
+package santander.tecnologia.challenge.service.weather;
 
 import java.net.URI;
 

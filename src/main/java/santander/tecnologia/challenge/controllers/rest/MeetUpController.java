@@ -18,7 +18,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import santander.tecnologia.challenge.exception.MeetUpException;
-import santander.tecnologia.challenge.service.MeetUpService;
+import santander.tecnologia.challenge.service.meetUp.MeetUpService;
 import santander.tecnologia.challenge.ws.request.MeetUpCreateRequest;
 import santander.tecnologia.challenge.ws.response.MeetUpAddUserResponse;
 import santander.tecnologia.challenge.ws.response.MeetUpConfirmAssistenceResponse;
@@ -49,7 +49,7 @@ public class MeetUpController {
 			@ApiResponse(code = 404, message = "Not Found")})
 	public ResponseEntity<?> amountBeer(@PathVariable("meetUpId") long meetUpId) {
 		try {
-			MeetUpObtainAmountBeerResponse meetUpObtainAmountBeerResponse =meetUpService.obtaintAmountBeer(meetUpId);
+			MeetUpObtainAmountBeerResponse meetUpObtainAmountBeerResponse =meetUpService.getAmountBeer(meetUpId);
 			return new ResponseEntity<>(meetUpObtainAmountBeerResponse,HttpStatus.OK);
 		}catch(MeetUpException e){
 			LOGGER.error(ERROR_MESSAGE_MEET_UP_OR_USER_NOT_EXIST, e);

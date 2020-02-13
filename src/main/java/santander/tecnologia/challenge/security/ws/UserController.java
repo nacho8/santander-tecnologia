@@ -4,6 +4,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,19 +17,52 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import santander.tecnologia.challenge.exception.UserException;
 import santander.tecnologia.challenge.security.jwt.AccountCredentials;
+import santander.tecnologia.challenge.service.user.UserService;
 
 @RestController
 public class UserController {
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+	
+	private static final String ERROR_MESSAGE_INTERNAL = "Error interno";
+	
+	private static final String ERROR_MESSAGE_NOT_EXITST_USER_OR_PASSWORD_INVALID = "El usuario o la contraseña son incorrectos";
+	
+	@Autowired
+	private UserService userService;
+	
 	@PostMapping("logIn")
-	public AccountCredentials login(@RequestParam("user") String username, @RequestParam("password") String pwd) {
+	@ApiOperation(value = "Metodo encargado de devolver el clima para una meetUp")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
+			@ApiResponse(code = 500, message = "Internal Server Error"),
+			@ApiResponse(code = 400, message = "Bad Request"),
+			@ApiResponse(code = 404, message = "Not Found")})
+	public ResponseEntity<AccountCredentials> login(@RequestParam("user") String username, @RequestParam("password") String pwd) {
+		AccountCredentials accountCredentials = new AccountCredentials();
+		try {
+			
+			userService.getUser(username, pwd);
+			
+			
+			String token = getJWTToken(username);
+			accountCredentials.setUsername(username);
+			accountCredentials.setToken(token);		
+			return new ResponseEntity<>(accountCredentials,HttpStatus.OK);
+		}catch(UserException e) {
+			LOGGER.error(ERROR_MESSAGE_NOT_EXITST_USER_OR_PASSWORD_INVALID, e);
+			accountCredentials.setUsername(ERROR_MESSAGE_NOT_EXITST_USER_OR_PASSWORD_INVALID);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(accountCredentials);
+		}catch(Exception e) {
+			LOGGER.error(ERROR_MESSAGE_INTERNAL, e);
+			accountCredentials.setUsername(ERROR_MESSAGE_NOT_EXITST_USER_OR_PASSWORD_INVALID);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(accountCredentials);
+		}
 		
-		String token = getJWTToken(username);
-		AccountCredentials user = new AccountCredentials();
-		user.setUsername(username);
-		user.setToken(token);		
-		return user;
 		
 	}
 

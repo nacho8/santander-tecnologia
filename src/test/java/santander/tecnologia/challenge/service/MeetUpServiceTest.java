@@ -17,10 +17,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import santander.tecnologia.challenge.domain.TemperatureParametry;
+import santander.tecnologia.challenge.service.meetUp.MeetUpService;
 
 @RunWith(SpringRunner.class)
-@DataJpaTest
-@EnableJpaRepositories("santander.tecnologia.challenge.persistence")
 public class MeetUpServiceTest {
 
 	@TestConfiguration

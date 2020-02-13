@@ -7,7 +7,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
-import santander.tecnologia.challenge.service.WeatherService;
+import santander.tecnologia.challenge.service.weather.WeatherService;
 import santander.tecnologia.challenge.ws.weather.response.WeatherResponse;
 
 @Transactional

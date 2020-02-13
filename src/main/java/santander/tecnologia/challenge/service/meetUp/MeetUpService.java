@@ -1,4 +1,4 @@
-package santander.tecnologia.challenge.service;
+package santander.tecnologia.challenge.service.meetUp;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -52,10 +52,12 @@ public class MeetUpService {
 		return  meetUpRepository.findAll();
 	}
 	
-	public MeetUpObtainAmountBeerResponse obtaintAmountBeer(Long meetUpId) throws Exception {
+	public MeetUpObtainAmountBeerResponse getAmountBeer(Long meetUpId) throws Exception {
+		LOGGER.debug("Arranco el proceso de solicitar la cantidad de cerveza.");
 		MeetUpObtainAmountBeerResponse meetUpObtainAmountBeerResponse = new MeetUpObtainAmountBeerResponse();
 		
 		if(!meetUpRepository.findById(meetUpId).isPresent()) {
+			LOGGER.error("Ocurrio un error durante la solicitud de cantidad de cerveza. La meetUp cuyo id es : " + meetUpId + " no existe");
 			throw new MeetUpException("No existe la meetUp");
 		}
 		
@@ -74,6 +76,7 @@ public class MeetUpService {
 		int value = calculateBeerByPerson(temperatureParametryCache.getParametry(),temperature, meetUp.getMeetUpUser().size());
 		meetUpObtainAmountBeerResponse.setAmountBeer(value);
 		meetUpObtainAmountBeerResponse.setStatus("200");
+		LOGGER.debug("Termino con el proceso de solicitar la cantidad de cerveza. La cantidad de cerveza fue " + value);
 		return meetUpObtainAmountBeerResponse;
 	}
 
@@ -82,21 +85,18 @@ public class MeetUpService {
 		 for(TemperatureParametry temperatureParametry : temperatureParametryList) {
 			 if(temperatureParametry.getMaximumTemperature() != null) {
 				 if(temperatureParametry.getMinimunTemperature() == null && temperatureParametry.getMaximumTemperature().compareTo(temperature) == 1) {
-					 System.out.println("Compare " + 1);
 					 beer = temperatureParametry.getAmountBeerByPerson();
 					 break;
 				 }
 			 }
 			 if(temperatureParametry.getMinimunTemperature() != null) {
 				 if(temperatureParametry.getMaximumTemperature() == null && temperatureParametry.getMinimunTemperature().compareTo(temperature) == -1) {
-					 System.out.println("Compare " + -1);	
 					 beer = temperatureParametry.getAmountBeerByPerson();
 					 break;
 				 }
 			 }
 			 if(temperatureParametry.getMinimunTemperature() != null && temperatureParametry.getMaximumTemperature() != null) {
 				 if(temperatureParametry.getMinimunTemperature().compareTo(temperature) >= 0 && temperatureParametry.getMaximumTemperature().compareTo(temperature) <= 0) {
-					 System.out.println("Compare " + 0);	
 					 beer = temperatureParametry.getAmountBeerByPerson();
 					 break;
 				 }
@@ -124,55 +124,66 @@ public class MeetUpService {
 	}
 	
 	public MeetUpObtainTemperatureResponse getTemperature(Long meetUpId) throws Exception {
+		LOGGER.debug("Arranco proceso de obtener la temperatura para la meetUp cuyo id es " + meetUpId);
 		MeetUpObtainTemperatureResponse meetUpObtainTemperatureResponse = new MeetUpObtainTemperatureResponse();
 		if(!meetUpRepository.findById(meetUpId).isPresent()) {
+			LOGGER.error("Ocurrio un error durante la solicitud de solicitar la temperatura de la cerveza. La meetUp cuyo id es : " + meetUpId + " no existe");
 			throw new MeetUpException("No existe la meetUp");
 		}
 		
 		MeetUp meetUp = meetUpRepository.findById(meetUpId).get();
 		meetUpObtainTemperatureResponse.setTemperature(getTemperatureOfMeetUp(meetUp));
+		LOGGER.debug("Finalizo proceso de obtener la temperatura para la meetUp cuyo id es " + meetUpId + " La temperatura es de : " + meetUpObtainTemperatureResponse.getTemperature() );
 		return meetUpObtainTemperatureResponse;
 	}
 	
 	public MeetUpAddUserResponse addUser(Long meetUpId, Long userId) throws Exception {
+		LOGGER.debug("Arranco con el proceso de agregar el usuario " + userId + " a la meetUp " + meetUpId) ;
+
 		MeetUpAddUserResponse meetUpAddUserResponse = new MeetUpAddUserResponse();
 		
 		if(!meetUpRepository.findById(meetUpId).isPresent()) {
+			LOGGER.error("Ocurrio un error durante la solicitud de agregar usuario. La meetUp cuyo id es : " + meetUpId + " no existe");
 			throw new MeetUpException("No existe la meetUp");
 		}
 		MeetUp meetUp = meetUpRepository.findById(meetUpId).get();
 		if(!userRepository.findById(userId).isPresent()) {
+			LOGGER.error("Ocurrio un error durante la solicitud de  agregar usuario. El usuario cuyo id es : " + userId + " no existe");
 			throw new MeetUpException("No existe el usuario");
 		}
 		 User user = userRepository.findById(userId).get();
 		
 		
 		addUserToMeetUp(meetUpAddUserResponse, meetUp, user);
+		LOGGER.debug("Finalizo con el proceso de agregar el usuario " + userId + " a la meetUp " + meetUpId) ;
 		return meetUpAddUserResponse;
 		
 	}
 	
 	public MeetUpCreateResponse createMeetUp(Long userId, String direction, LocalDate dateMeetUp)  throws Exception {
+		LOGGER.debug("Arranco con el proceso de crear la meetUp");
 		MeetUpCreateResponse meetUpCreateResponse = new MeetUpCreateResponse();
 		 
 		if(!userRepository.findById(userId).isPresent()) {
+			LOGGER.error("Ocurrio un error durante la solicitud de crear una meetUp. El usuario cuyo id es : " + userId + " no existe");
 			throw new MeetUpException("No existe el usuario");
 		}
 		 User user = userRepository.findById(userId).get();
 		
-		 MeetUp meetUp = new MeetUp();
-		 meetUp.setDirection(direction);
-		 meetUp.setMeetUpDate(dateMeetUp);
+		 MeetUp meetUp = new MeetUp(dateMeetUp,direction);
 		 meetUpRepository.save(meetUp);
 		 
 		addUserToMeetUp(meetUpCreateResponse,meetUp,user);
+		LOGGER.debug("Finalizo con el proceso de crear la meetUp");
 		return meetUpCreateResponse;
 	}
 	
 	public MeetUpConfirmAssistenceResponse confirmAssistence(Long userId, Long meetUpId) throws Exception {
+		LOGGER.debug("Arranco con el confirmar asistencia del usuario " + userId + " a la meetUp " + meetUpId);
 		MeetUpConfirmAssistenceResponse meetUpConfirmAssistenceResponse = new MeetUpConfirmAssistenceResponse();
 		
 		if(!userRepository.findById(userId).isPresent()) {
+			LOGGER.error("Ocurrio un error durante la solicitud de confirmar asistencia. El usuario cuyo id es : " + userId + " no existe");
 			throw new MeetUpException("No existe el usuario");
 		}
 		 User user = userRepository.findById(userId).get();
@@ -187,14 +198,12 @@ public class MeetUpService {
 				 }
 			 }
 		 }
+		 LOGGER.debug("Finalizo con el confirmar asistencia del usuario " + userId + " a la meetUp " + meetUpId);
 		return meetUpConfirmAssistenceResponse;
 	}
 
 	private void addUserToMeetUp(Response meetUpResponse, MeetUp meetUp, User user) {
-		MeetUpUsers meetUpUsers = new MeetUpUsers();
-		meetUpUsers.setMeetUp(meetUp);
-		meetUpUsers.setUser(user);
-		meetUpUsers.setUserMeetUpDate(new Date());
+		MeetUpUsers meetUpUsers = new MeetUpUsers(meetUp,user,new Date(),false);
 		meetUpUsersRepository.save(meetUpUsers);
 	}
 }
