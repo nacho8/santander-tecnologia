@@ -6,6 +6,8 @@ Framework: Spring boot con java 8.
 
 Base de datos: H2 --> Usuario: Santander, Password: admin1234
 
+La aplicacion se levanta desde la clase principal llamada MeetUpApplication, ejecutando Run As --> Java Application
+
 ## Puerto y Host
 La aplicacion levanta en localhost, en el puerto 8080
 
