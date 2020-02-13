@@ -21,7 +21,7 @@ El método para generar el token es el siguiente: http://localhost:8080/logIn?us
 
 Luego, para realizar las peticiones al resto de las apis, es necesario agregar dicho token en el Header Authentication.
 
-> NOTA: Para obtener el token, considero admin a todos los usuarios que arrancen con la palabra admin. Ejemplo: adminSantander. El resto de los usuarios que no tengan la palabra admin, los considero usuarios normales. El rol ADMIN puede realizar cualquiera acción, mientras que el rol USER solo puede confirmar asistencia a una meetUp y obtener el clima.
+> NOTA: Para obtener el token, considero admin a todos los usuarios que arranquen con la palabra admin. Ejemplo: adminSantander. El resto de los usuarios que no tengan la palabra admin, los considero usuarios normales. El rol ADMIN puede realizar cualquiera acción, mientras que el rol USER solo puede confirmar asistencia a una meetUp y obtener el clima. Lo ideal hubiera sido tener los roles en la base de datos, pero no hice a tiempo.
 
 ## Comentarios
 En la utilización de la api del clima tome como valida la temperatura máxima. Me base en el supuesto de que "es siempre preferible a que sobre". Igualmente guardo todas las temperaturas que me devuelve la api por si en un futuro se desea cambiar la lógica.
