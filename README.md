@@ -12,6 +12,17 @@ La aplicacion levanta en localhost, en el puerto 8080
 ## Swagger
 La url para visualizar el swagger es la siguiente: http://localhost:8080/swagger-ui.html
 
+## Security
+Para la seguridad de las apis rest, debido a no contar con un SSO, utilice JWT.
+
+El método para generar el token es el siguiente: http://localhost:8080/logIn?user={user}&password={password}. El resultado de esto es un json que contiene el siguiente parametro: 
+
+"token": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJzb2Z0dGVrSldUIiwic3ViIjoiJ2l2YXJlbGEnIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTU4MTU5NDUzNywiZXhwIjoxNTgxNTk1MTM3fQ.xdNKisakk5UM3f32FlbDsf3s83kUQm_3KKayUykOf-ecsPzCycjq_69vA2CpiFFQjI7Wty6eBPfLadaDRKhWNw"
+
+Luego, para realizar las peticiones al resto de las apis, es necesario agregar dicho token en el Header Authentication.
+
+
+
 ## Comentarios
 En la utilización de la api del clima tome como valida la temperatura máxima. Me base en el supuesto de que "es siempre preferible a que sobre". Igualmente guardo todas las temperaturas que me devuelve la api por si en un futuro se desea cambiar la lógica.
 
