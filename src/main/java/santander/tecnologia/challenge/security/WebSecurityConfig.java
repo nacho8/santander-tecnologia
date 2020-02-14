@@ -19,15 +19,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		 http.headers().frameOptions().disable();
-		http.csrf().disable()
+		 http.csrf().disable()
 			.addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
 			.authorizeRequests()
 			.antMatchers(HttpMethod.POST, "/logIn").permitAll()
 			.antMatchers("/h2-console/**").permitAll()
+			.antMatchers("/findAll/**").permitAll()
 			.antMatchers("/confirmAssistence/**").hasAnyRole("USER","ADMIN")
 			.antMatchers("/obtainWeather/**").hasAnyRole("USER","ADMIN")
 			.antMatchers("/**").hasRole("ADMIN");
 	}
-    
-   
 }

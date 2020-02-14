@@ -11,7 +11,6 @@ import santander.tecnologia.challenge.domain.MeetUpUsers;
 
 
 @Repository
-@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public interface MeetUpUsersRepository extends CrudRepository<MeetUpUsers, Long> {
 	
 	List<MeetUpUsers> findAll();

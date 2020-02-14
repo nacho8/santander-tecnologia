@@ -29,6 +29,9 @@ public class MeetUp {
 	
 	private String direction;
 
+	public MeetUp() {
+		super();
+	}
 	
 	public MeetUp(LocalDate meetUpDate, String direction) {
 		super();

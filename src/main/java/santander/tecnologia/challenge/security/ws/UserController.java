@@ -61,8 +61,6 @@ public class UserController {
 			accountCredentials.setUsername(ERROR_MESSAGE_NOT_EXITST_USER_OR_PASSWORD_INVALID);
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(accountCredentials);
 		}
-		
-		
 	}
 
 	private String getJWTToken(String username) {

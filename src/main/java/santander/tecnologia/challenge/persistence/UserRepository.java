@@ -12,7 +12,6 @@ import santander.tecnologia.challenge.domain.User;
 
 
 @Repository
-@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public interface UserRepository extends CrudRepository<User, Long> {
 	
 	List<User> findAll();

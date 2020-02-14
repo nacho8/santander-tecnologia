@@ -21,7 +21,6 @@ public class MeetUpApplication extends SpringBootServletInitializer{
 	
 	public static void main(String[] args) {
 		SpringApplication.run(MeetUpApplication.class, args);
-		
 	}
 	
 	
