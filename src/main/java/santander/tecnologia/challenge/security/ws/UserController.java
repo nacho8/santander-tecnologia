@@ -12,7 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.jsonwebtoken.Jwts;
@@ -25,6 +26,7 @@ import santander.tecnologia.challenge.security.jwt.AccountCredentials;
 import santander.tecnologia.challenge.service.user.UserService;
 
 @RestController
+@RequestMapping("/")
 public class UserController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
@@ -42,15 +44,12 @@ public class UserController {
 			@ApiResponse(code = 500, message = "Internal Server Error"),
 			@ApiResponse(code = 400, message = "Bad Request"),
 			@ApiResponse(code = 404, message = "Not Found")})
-	public ResponseEntity<AccountCredentials> login(@RequestParam("user") String username, @RequestParam("password") String pwd) {
+	public ResponseEntity<AccountCredentials> login(@RequestBody AccountCredentials credentials) {
 		AccountCredentials accountCredentials = new AccountCredentials();
 		try {
-			
-			userService.getUser(username, pwd);
-			
-			
-			String token = getJWTToken(username);
-			accountCredentials.setUsername(username);
+			userService.getUser(credentials.getUsername(), credentials.getPassword());
+			String token = getJWTToken(credentials.getUsername());
+			accountCredentials.setUsername(credentials.getUsername());
 			accountCredentials.setToken(token);		
 			return new ResponseEntity<>(accountCredentials,HttpStatus.OK);
 		}catch(UserException e) {
