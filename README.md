@@ -17,7 +17,7 @@ La url para visualizar el swagger es la siguiente: http://localhost:8080/swagger
 ## Security
 Para la seguridad de las apis rest, debido a no contar con un SSO, utilice JWT.
 
-El método para generar el token es el siguiente: http://localhost:8080/logIn?user={user}&password={password}. El resultado de esto es un json que contiene el siguiente parametro: 
+El método para generar el token es el siguiente: http://localhost:8080/logIn. Este metodo recibe un json con los parametros username y password. El resultado de esto es un json que contiene el siguiente parametro: 
 
 "token": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJzb2Z0dGVrSldUIiwic3ViIjoiJ2l2YXJlbGEnIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTU4MTU5NDUzNywiZXhwIjoxNTgxNTk1MTM3fQ.xdNKisakk5UM3f32FlbDsf3s83kUQm_3KKayUykOf-ecsPzCycjq_69vA2CpiFFQjI7Wty6eBPfLadaDRKhWNw"
 
