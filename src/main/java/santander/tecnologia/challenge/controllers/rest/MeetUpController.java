@@ -1,5 +1,7 @@
 package santander.tecnologia.challenge.controllers.rest;
 
+import java.time.format.DateTimeFormatter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,6 +115,7 @@ public class MeetUpController {
 			@ApiResponse(code = 404, message = "Not Found")})
 	public ResponseEntity<?> createMeetUp(@RequestBody MeetUpCreateRequest meetUpCreateRequest) {
 		try {
+			
 			MeetUpCreateResponse meetUpCreateResponse = meetUpService.createMeetUp(meetUpCreateRequest.getUserId(),meetUpCreateRequest.getDirection(), meetUpCreateRequest.getDateMeetUp());
 			return new ResponseEntity<>(meetUpCreateResponse,HttpStatus.OK);
 		}catch(MeetUpException e){

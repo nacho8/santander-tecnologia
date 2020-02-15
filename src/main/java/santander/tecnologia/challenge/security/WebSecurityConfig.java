@@ -25,6 +25,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.POST, "/logIn").permitAll()
 			.antMatchers("/h2-console/**").permitAll()
 			.antMatchers("/findAll/**").permitAll()
+			.antMatchers(HttpMethod.GET,
+                    "/v2/api-docs",
+                    "/swagger-resources/**",
+                    "/swagger-ui.html**",
+                    "/webjars/**",
+                    "favicon.ico").permitAll()
 			.antMatchers("/confirmAssistence/**").hasAnyRole("USER","ADMIN")
 			.antMatchers("/obtainWeather/**").hasAnyRole("USER","ADMIN")
 			.antMatchers("/**").hasRole("ADMIN");

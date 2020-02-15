@@ -5,10 +5,9 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.Date;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.stereotype.Component;
 
 import santander.tecnologia.challenge.domain.MeetUp;
@@ -20,8 +19,6 @@ import santander.tecnologia.challenge.persistence.UserRepository;
 import santander.tecnologia.challenge.service.user.UserService;
 
 @Component
-@ComponentScan(basePackages = { "org.baeldung.security" })
-@EnableWebSecurity
 public class UserStartUp {
 	
 	
@@ -37,11 +34,8 @@ public class UserStartUp {
 	@Autowired
 	private UserService userService;
 	
-	private static final int INITIAL_DELAY =4000;
 	
-	
-	
-	@Scheduled(initialDelay = INITIAL_DELAY,fixedRate = 600000000)
+	@PostConstruct
 	public void registerNewUser()  {
 	    User user = new User("Leandro","Salomon","lsalomon");
 	    user.setPassword(userService.encode("lsalomon1234"));

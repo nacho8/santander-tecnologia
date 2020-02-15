@@ -158,6 +158,7 @@ public class MeetUpService {
 	public MeetUpCreateResponse createMeetUp(Long userId, String direction, LocalDate dateMeetUp)  throws Exception {
 		LOGGER.debug("Arranco con el proceso de crear la meetUp");
 		MeetUpCreateResponse meetUpCreateResponse = new MeetUpCreateResponse();
+		
 		 
 		if(!userRepository.findById(userId).isPresent()) {
 			LOGGER.error("Ocurrio un error durante la solicitud de crear una meetUp. El usuario cuyo id es : " + userId + " no existe");
