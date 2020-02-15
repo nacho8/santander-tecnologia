@@ -18,7 +18,7 @@ public class TemperatureJob {
 	@Scheduled(initialDelay = INITIAL_DELAY, fixedRate = FIXED_RATE)
 	protected void refreshcache() throws Exception {
 		System.out.println("ARRANCO CACHE ");
-		cache.getTemperature();
+		cache.refresh();
 	}
 
 }

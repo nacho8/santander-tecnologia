@@ -18,7 +18,7 @@ public class ParametryJob {
 
 	@Scheduled(initialDelay = INITIAL_DELAY, fixedRate = FIXED_RATE)
 	protected void refreshcache() {
-		cache.getParametry();
+		cache.refresh();
 	}
 	
 
