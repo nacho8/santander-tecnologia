@@ -63,11 +63,11 @@ public class UserStartUp {
 	    user4.setPassword(userService.encode("plorenzo1234"));
 	    userRepository.save(user4);
 	    
-	    MeetUp meetUp = new MeetUp(LocalDate.of(2019, Month.FEBRUARY, 26),"AV CASEROS 2138");
+	    MeetUp meetUp = new MeetUp(LocalDate.of(2020, Month.FEBRUARY, 26),"AV CASEROS 2138");
 	    meetUpRepository.save(meetUp);
-	    MeetUp meetUp1 = new MeetUp(LocalDate.of(2019, Month.FEBRUARY, 27),"AV SAN JUAN 2138");
+	    MeetUp meetUp1 = new MeetUp(LocalDate.of(2020, Month.FEBRUARY, 27),"AV SAN JUAN 2138");
 	    meetUpRepository.save(meetUp1);
-	    MeetUp meetUp2 = new MeetUp(LocalDate.of(2019, Month.FEBRUARY, 25),"AV INDEPENDENCIA 2138");
+	    MeetUp meetUp2 = new MeetUp(LocalDate.of(2020, Month.FEBRUARY, 25),"AV INDEPENDENCIA 2138");
 	    meetUpRepository.save(meetUp2);
 	    
 	    MeetUpUsers meetUpUsers = new MeetUpUsers(meetUp,user,new Date(),false);

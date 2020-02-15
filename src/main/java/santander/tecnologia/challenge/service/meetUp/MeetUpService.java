@@ -62,20 +62,15 @@ public class MeetUpService {
 		}
 		
 		MeetUp meetUp = meetUpRepository.findById(meetUpId).get();
-		 if(meetUp == null) {
-			 meetUpObtainAmountBeerResponse.setStatus("50001");
-			 meetUpObtainAmountBeerResponse.setAmountBeer(0);
-			 return meetUpObtainAmountBeerResponse;
-		 }
+		
 		
 		Double temperature = getTemperatureOfMeetUp(meetUp);
 		if(temperature == null) {
-			meetUpObtainAmountBeerResponse.setStatus("No se encontro la temperatura");
-			return meetUpObtainAmountBeerResponse;
+			LOGGER.error("Ocurrio un error durante la solicitud de cantidad de cerveza. No encuentro la temperatura para la la meetUp cuyo id es : " + meetUpId );
+			throw new MeetUpException("No encuentro la temperatura asociada a esa meetUp.");
 		}
 		int value = calculateBeerByPerson(temperatureParametryCache.getParametry(),temperature, meetUp.getMeetUpUser().size());
 		meetUpObtainAmountBeerResponse.setAmountBeer(value);
-		meetUpObtainAmountBeerResponse.setStatus("200");
 		LOGGER.debug("Termino con el proceso de solicitar la cantidad de cerveza. La cantidad de cerveza fue " + value);
 		return meetUpObtainAmountBeerResponse;
 	}
@@ -116,7 +111,7 @@ public class MeetUpService {
 		WeatherResponse weatherResponse = temperatureCache.getTemperature();
 		Double temp = null;
 		for(WeatherDay weatherDay: weatherResponse.getList()) {
-			if(meetUp.getMeetUpDate().compareTo(weatherDay.getDate()) == 0) {
+			if(meetUp.getMeetUpDate().compareTo(weatherDay.getDate())== 0) {
 				temp = (double) weatherDay.getTemp().getMax();
 			}
 		}

@@ -27,6 +27,8 @@ public class User {
 	
 	private String password;
 	
+	
+	
 	public User(String firstName, String lastName, String userName) {
 		super();
 		this.firstName = firstName;

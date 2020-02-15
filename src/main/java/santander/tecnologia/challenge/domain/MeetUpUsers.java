@@ -30,6 +30,9 @@ public class MeetUpUsers {
     private boolean userAttented;
 
     
+    public MeetUpUsers() {
+		super();
+	}
     
 	public MeetUpUsers(MeetUp meetUp, User user, Date userMeetUpDate, boolean userAttented) {
 		super();
