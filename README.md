@@ -25,6 +25,10 @@ Luego, para realizar las peticiones al resto de las apis, es necesario agregar d
 
 > NOTA: Para obtener el token, considero admin a todos los usuarios que arranquen con la palabra admin. Ejemplo: adminSantander. El resto de los usuarios que no tengan la palabra admin, los considero usuarios normales. El rol ADMIN puede realizar cualquiera acción, mientras que el rol USER solo puede confirmar asistencia a una meetUp y obtener el clima.
 
+## Documentos
+
+En la carpeta Docs/CI-CD se encuentra el pipeline para hacer integración continua junto con un txt explicativo
+
 ## Comentarios
 En la utilización de la api del clima tome como valida la temperatura máxima. Me base en el supuesto de que "es siempre preferible a que sobre". Igualmente guardo todas las temperaturas que me devuelve la api por si en un futuro se desea cambiar la lógica.
 
