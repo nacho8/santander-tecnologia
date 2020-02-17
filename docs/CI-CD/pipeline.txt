@@ -1,0 +1,16 @@
+1)El desarrollador realiza un push del código.
+
+2) Una vez que el nuevo código se encuentra en el repositorio GIT,este le avisa a jenkins a traves de webhhooks que se 
+realizo un push. Jenkins se descarga el nuevo código y ejecuta los test unitarios correspondientes. 
+
+3)Si lo test unitarios resultaron exitosos, se procede a realizar la prueba de la calidad del código .
+
+4) Si dicha prueba resulta exitosa, se procede a dejar el nuevo desarrollo en el repositorio interno ( podría ser nexus ) 
+ para que los otros desarrollos ya lo puedan utilizar. 
+
+5)Luego jenkins se encarga de desplegar el nuevo código en el entorno de testing. (El entorno de testing puede ser
+un entorno temporal)
+
+6)En dicho entorno se ejecutan las pruebas automáticas de testing ( se puede utilizar selenium).
+
+7)Si las pruebas son exitosas se procede a realizar el despliegue en UAT y luego en PROD.
