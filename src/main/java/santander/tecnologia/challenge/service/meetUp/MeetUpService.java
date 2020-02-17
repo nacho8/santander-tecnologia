@@ -187,7 +187,8 @@ public class MeetUpService {
 		 for(MeetUpUsers meetUpUser:user.getMeetUpUser()) {
 			 if(meetUpUser.getId().equals(meetUpId)) {
 				 if(!meetUpUser.getUserMeetUpDate().before(new Date())) {
-					 meetUpConfirmAssistenceResponse.setStatus("5002");
+						LOGGER.error("Ocurrio un error durante la solicitud de confirmar asistencia. Aun no ocurrio la meetUp cuyo id es : " + meetUpId);
+						throw new MeetUpException("Aún no ocurrio la meetUp.");
 				 }else {
 					 meetUpUser.setUserAttented(true);
 					 meetUpUsersRepository.save(meetUpUser); 
